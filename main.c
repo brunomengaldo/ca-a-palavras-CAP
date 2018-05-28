@@ -83,24 +83,23 @@ int main(int argc, char *argv[]){
 
 
 
-//=========================================================
-
-
-
-//Objetivo: Definição de como o programa realizará o caça palavras 
-//Parâmetros formais
-//- não há (parâmetro de saída de dados)
+// Objetivo: Definição de como o programa realizará o caça palavras 
+// Parâmetros formais
+// - não há (parâmetro de saída de dados)
 // Valor de Retorno:
-// -opcao: opção escolhida pelo usuário
+// - opcao: opção escolhida pelo usuário
 int subStart(){
 
     // Variáveis Locais
     int opcao;
 
+    // Impressão das possíveis opções do caça palavras
     printf("Escolha o modo de criacao do caca palavras:\n");
     printf("\t - Criar matriz e palavras aleatorias (0)\n");
     printf("\t - Abrir arquivos de matriz e palavras (1)\n");
     printf("\t - Inserir dados manualmente (2)\n\n");
+
+    // Análise da escolha do usuário
     scanf("%d", &opcao);
 
     return opcao;
@@ -142,12 +141,14 @@ void subAleat(infos *p){
     // Contadores
     int i, j;
 
+    // Criação da matriz de inteiros correspondentes às letras maiúsculas da tabela ASCII
     for(i=0; i<p->nLinhas; i++){
         for(j=0; j<p->nColunas; j++){
             p->matriz[i][j]=(rand()%26)+(65);
         }
     }
 
+    // Criação de matriz transposta à matriz principal
     for(i=0; i<p->nLinhas; i++){
         for(j=0; j<p->nColunas; j++){
             p->transposta[j][i]=p->matriz[i][j];
@@ -205,6 +206,7 @@ void subLeitura(infos *p){
     // Variável Local
     char nome[2][1000];
 
+    // Armazenamento do nome dos arquivos
     fflush(stdin);
     printf("Insira o nome do arquivo da matriz (com .txt):\n");
     gets(nome[0]);
@@ -212,15 +214,12 @@ void subLeitura(infos *p){
     gets(nome[1]);    
     fflush(stdin);
 
-    // Ler arquivo da matriz
+    // Leitura arquivo da matriz
     FILE *arquivoX;
-
     arquivoX = fopen(nome[0], "r");
 
-    fscanf(arquivoX, "%d", &p->nLinhas);
-    
+    fscanf(arquivoX, "%d", &p->nLinhas);    
     fscanf(arquivoX, "%d", &p->nColunas);
-
     fgetc(arquivoX);
 
     for(i=0; i<p->nLinhas; i++){
@@ -231,7 +230,7 @@ void subLeitura(infos *p){
     fclose(arquivoX);
 
 
-    // Ler arquivo de palavras
+    // Leitura arquivo de palavras
     arquivoX = fopen(nome[1], "r");
 
     fscanf(arquivoX, "%d", &p->nPalavras);
@@ -311,7 +310,7 @@ void subLinear(infos *p){
         cont0++;
     }
 
-    // Fim do vetor
+    // Finalização do vetor
     p->vetor[cont0] = '\0';
 
     return;

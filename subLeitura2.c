@@ -82,6 +82,7 @@ void subLeitura(inf *p){
     for(i=0; i<(*p).nPalavras; i++){
         fscanf(arquivoX, "%s", &p->lista[i]);
     }
+    fclose(arquivoX);
     
     return;
 }

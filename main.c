@@ -15,18 +15,20 @@ Objetivo: Criar um programa capaz de determinar se um caça
 #include <stdlib.h>
 #include <time.h>
 
+// Constante Global
+#define MAX 100
 
 // Tipos de Dados
 typedef struct{
     int nColunas;
     int nLinhas;
     int nPalavras;
-    char matriz[100][100];
-    char transposta[100][100];
-    char lista[100][100];
-    char randW[100][100];
-    char vetor[1000000];
-    char faltam[100][100]; 
+    char matriz[MAX][MAX];
+    char transposta[MAX][MAX];
+    char lista[MAX][MAX];
+    char randW[MAX][MAX];
+    char vetor[MAX*MAX*10];
+    char faltam[MAX][MAX]; 
 } infos;
 
 
@@ -170,22 +172,24 @@ void subPalavras(infos *p){
     srand(time(NULL));
 
     // Variáveis Locais
-    int i, j, indL, indC;
+    int i, j, indL, indC, c=0;
 
+    // Obtenção das palavras pertencentes às matrizes (principal e transposta)
     for(i=0; i<p->nPalavras; i++){
         
-        indL=(rand()%p->nLinhas-2)+2;
-        indC=(rand()%p->nColunas-2)+2;
+        indL=(rand()%p->nLinhas-1);
+        indC=(rand()%p->nColunas-1);
 
         for(j=0; j<p->nPalavras; j++){    
-            if(i%2==0){
-                p->randW[i][j] = p->matriz[i][indL];
-                indL++;
-            }
-            else{
-                p->randW[i][j] = p->transposta[i][indC];
+            if(i<p->nLinhas){
+                p->randW[i][j] = p->matriz[i][indC];
                 indC++;
             }
+            else{
+                p->randW[i][j] = p->transposta[i][indL];
+                indL++;
+                c++;
+            }            
         }
     }
 
@@ -204,7 +208,7 @@ void subLeitura(infos *p){
     int i, j;
 
     // Variável Local
-    char nome[2][1000];
+    char nome[2][MAX];
 
     // Armazenamento do nome dos arquivos
     fflush(stdin);
